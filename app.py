@@ -134,6 +134,3 @@ def evaluate():
     score = get_eval(act_txt, que_txt)
 
     return {'act_text': act_txt, 'que_text': que_txt, 'percentage': score[0], 'marks': score[1]}
-
-if __name__ == "__main__":
-    app.run(debug='on')
