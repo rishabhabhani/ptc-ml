@@ -22,11 +22,8 @@ nlp = spacy.load("en_core_web_sm")
 dropout_model = joblib.load('./models/try1.pkl')
 counsel_model = joblib.load('./models/xgbmodel_cp.dat')
 
-
 app = Flask(__name__)
 app.secret_key = "secret key"
-app.config['UPLOAD_FOLDER'] = './uploads'
-
 
 @app.route('/summary', methods=['POST'])
 def summary():
