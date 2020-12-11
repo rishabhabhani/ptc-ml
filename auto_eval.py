@@ -8,7 +8,6 @@ import numpy as np
 import nltk
 from nltk.corpus import stopwords
 
-nltk.download('punkt')
 stop_words = set(stopwords.words('english'))
 
 
