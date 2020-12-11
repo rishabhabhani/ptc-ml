@@ -17,6 +17,9 @@ import joblib
 import numpy as np
 from auto_eval import get_eval
 from get_similarity import get_similarity_score
+import nltk
+
+nltk.download('wordnet')
 
 nlp = spacy.load("en_core_web_sm")
 dropout_model = joblib.load('./models/try1.pkl')
