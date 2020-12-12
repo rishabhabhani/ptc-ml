@@ -18,6 +18,8 @@ import numpy as np
 from auto_eval import get_eval
 from get_similarity import get_similarity_score
 
+from flask-cors import CORS, cross_origin
+
 nlp = spacy.load("en_core_web_sm")
 dropout_model = joblib.load('./models/try1.pkl')
 counsel_model = joblib.load('./models/xgbmodel_cp.dat')
@@ -25,10 +27,13 @@ counsel_model = joblib.load('./models/xgbmodel_cp.dat')
 
 app = Flask(__name__)
 app.secret_key = "secret key"
-app.config['UPLOAD_FOLDER'] = './uploads'
+
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route('/summary', methods=['POST'])
+@cross_origin()
 def summary():
     if 'file' not in request.files:
         return {"data": "none"}
@@ -46,6 +51,7 @@ def summary():
     return {"value": ext_txt, "summary_text": summary, "keywords": keyword_ext}
 
 @app.route('/plagarism', methods=['POST'])
+@cross_origin()
 def plagarism():
     if 'file1' not in request.files or 'file2' not in request.files:
         flash('No file part')
@@ -62,6 +68,7 @@ def plagarism():
     return {"act_text": act_txt, "que_text": que_txt, "similar": sim_score}
 
 @app.route('/dropout', methods=['POST'])
+@cross_origin()
 def dropout():
     # Input retrieve
     data = request.form
@@ -77,6 +84,7 @@ def dropout():
     return {'prediction' : int(prediction[0])}
 
 @app.route('/counsel', methods=['POST'])
+@cross_origin()
 def counsel():
     data = request.json
     input_val = []
@@ -121,6 +129,7 @@ def counsel():
     return {'role' : role[prd]}
 
 @app.route('/evaluate', methods=['POST'])
+@cross_origin()
 def evaluate():
     if 'file1' not in request.files and 'file2' not in request.files:
         flash('No file part')
